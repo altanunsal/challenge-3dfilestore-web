@@ -33,6 +33,7 @@ You should provide:
 - A fully implemented and standalone backend code written in `Typescript`
 - An [OpenAPI](https://www.openapis.org) specification file for your REST operations
 - If your backend requires external dependencies such as a database, it should be either standalone (e.g. sqlite) or containerized with [Docker Compose](https://docs.docker.com/compose)
+- A properly structured test of one of the above listed features, with the test framework of your choice
 
 The frontend code is provided and has a mock of each requested features.
 
