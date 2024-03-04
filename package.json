@@ -4,5 +4,11 @@
   "workspaces": [
     "frontend",
     "backend"
-  ]
+  ],
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "scripts": {
+    "start": "concurrently \"TZ= yarn --cwd frontend start:w\" \"yarn --cwd backend start\""
+  }
 }
