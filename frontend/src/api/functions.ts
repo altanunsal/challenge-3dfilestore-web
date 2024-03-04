@@ -15,67 +15,70 @@ type Vector3 = {
   z: number;
 };
 
-const apiClient = axios.create({ baseURL: 'http://localhost:3333' });
+function stringifyVector(name: string, vector: Vector3): string {
+  return `${name}  ${vector.x}  ${vector.y}  ${vector.z}`;
+}
+
+const apiClient = axios.create({ baseURL: 'http://localhost:3333/api' });
 
 //-----------------------------------------------------------------------------
 export async function listFiles(): Promise<ObjFile[]> {
-  // TODO: Replace theses arguments with the correct ones
   const res = await apiClient.request<ObjFile[]>({
-    method: '<replace-me>',
-    url: '<replace-me>',
+    method: 'GET',
+    url: 'files',
   });
   return res.data;
 }
 
 //-----------------------------------------------------------------------------
 export async function getFile(fileId: string): Promise<ObjFile> {
-  // TODO: Replace theses arguments with the correct ones
   const res = await apiClient.request<ObjFile>({
-    method: '<replace-me>',
-    url: '<replace-me>',
+    method: 'GET',
+    url: 'files',
   });
   return res.data;
 }
 
 //-----------------------------------------------------------------------------
 export async function renameFile(fileId: string, newName: string): Promise<ObjFile> {
-  // TODO: Replace theses arguments with the correct ones
   const res = await apiClient.request<ObjFile>({
-    method: '<replace-me>',
-    url: '<replace-me>',
+    method: 'PUT',
+    url: `files/${fileId}`,
+    data: { name: newName },
   });
   return res.data;
 }
 
 //-----------------------------------------------------------------------------
 export async function deleteFile(fileId: string): Promise<void> {
-  // TODO: Replace theses arguments with the correct ones
   await apiClient.request<ObjFile>({
-    method: '<replace-me>',
-    url: '<replace-me>',
+    method: 'DELETE',
+    url: `files/${fileId}`,
   });
 }
 
 //-----------------------------------------------------------------------------
 export function downloadFile(fileId: string): void {
-  // TODO: Replace this value with the correct one
-  const downloadUrl = '<replace-me>';
+  const downloadUrl = `http://localhost:3333/downloads/${fileId}`;
   window.open(downloadUrl, '_blank');
 }
 
 //-----------------------------------------------------------------------------
 export async function uploadFile(data: FormData): Promise<ObjFile> {
-  // TODO: Replace theses arguments with the correct ones
   const res = await apiClient.request<ObjFile>({
-    method: '<replace-me>',
-    url: '<replace-me>',
+    method: 'POST',
+    url: 'files',
+    data,
   });
+
   return res.data;
 }
 
 //-----------------------------------------------------------------------------
 export function transformFile(fileId: string, scale: Vector3, offset: Vector3): void {
-  // TODO: Replace this value with the correct one
-  const transformUrl = '<replace-me>';
+  const transformUrl = `http://localhost:3333/api/transform/${fileId}?scale=${stringifyVector(
+    'scale',
+    scale,
+  )}&offset=${stringifyVector('offset', offset)}`;
   window.open(transformUrl, '_blank');
 }
