@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`transformVector transforms a vector according to the provided scale and offset 1`] = `
+{
+  "x": 5,
+  "y": 107,
+  "z": 44.4,
+}
+`;

@@ -1,14 +1,15 @@
-import fs from "node:fs";
-import readline from "node:readline/promises";
+import fs from 'node:fs';
+import readline from 'node:readline/promises';
 
-import { Vector3 } from "../typings";
-import { isSerializedVector, serializer } from "../utils/serializer";
+import { Vector3 } from '../typings';
+import { isSerializedVector, serializer } from '../utils/serializer';
+import { transformVector } from '../utils/transformVector';
 
 async function transform(
   filePath: string,
   scale: Vector3,
   offset: Vector3,
-  callback: (transformedData: string) => void
+  callback: (transformedData: string) => void,
 ): Promise<void> {
   const inputStream = fs.createReadStream(filePath);
   const reader = readline.createInterface({
@@ -22,17 +23,15 @@ async function transform(
       const line = serializer.deserialize(lineText);
 
       // apply transformations
-      line.vector.x = line.vector.x * scale.x + offset.x;
-      line.vector.y = line.vector.y * scale.y + offset.y;
-      line.vector.z = line.vector.z * scale.z + offset.z;
+      const tranformationResult = transformVector(line.vector, scale, offset);
 
-      const newLine = serializer.serialize(line);
+      const newLine = serializer.serialize({ label: line.label, vector: tranformationResult });
       callback(newLine);
     } else {
       callback(lineText);
     }
 
-    callback("\n");
+    callback('\n');
   }
 }
 
