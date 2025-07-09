@@ -38,14 +38,15 @@ transformRouter.use(
       `attachment; filename= ${id}_transformed.obj`
     );
 
-    await transformService.transform(
+    const transformedStream = transformService.transform(
       fileMeta.file_path,
       scaleVector,
-      offsetVector,
-      (data) => {
-        res.write(data, "utf-8");
-      }
+      offsetVector
     );
+
+    for await (const chunk of transformedStream) {
+      res.write(chunk, "utf-8");
+    }
 
     res.end();
   })
