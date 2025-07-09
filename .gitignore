@@ -46,3 +46,6 @@ package/
 *.tsbuildinfo
 next-env.d.ts
 !*.example
+
+# temp files storage
+backend/files/*.obj
